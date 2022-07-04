@@ -48,13 +48,15 @@
     }
 
      
-
+    let frag = document.createDocumentFragment;
     for (let e in emp.employees)
     {
+   
         let tr = "<tr>";
         let td =`<td> ${emp.employees[e].name}</td>
       <td> ${emp.employees[e].salary}</td>
        <td> ${emp.employees[e].workYears}</td>`
+        $("#table").append(tr + td);
         $("#table").append(tr + td);
     };
   
