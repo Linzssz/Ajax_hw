@@ -1,5 +1,5 @@
 ﻿
-@*@{
+@{
     ViewData["Title"] = "Address";
 }
 
@@ -17,34 +17,78 @@
 
     <script>
 
-
-
         const selCity = document.querySelector("#selCity");
         const selArea = document.querySelector("#selArea");
         const selRoad = document.querySelector("#selRoad");
 
-        selCity.addEventListener("change", () => {
+        selCity.addEventListener("change", loadArea);
+        selCity.addEventListener("change", loadRoad);
+        
+        //ASYNC
+        //City===========================================
+
+     
+
+        async function loadCity() {
+            const response = await fetch('@Url.Content("~/api/city")');
+            const data = await response.json();
+            data.forEach(city => {
+                const opt = new Option(city, city);
+                console.log(opt);
+                selCity.options.add(opt);
+
+            })
+            loadArear();
+        }
+     
+        //Area===========================================
+        async function loadArea() {
+            let city = selCity.options[selCity.selectedIndex].value;
+            console.log(city);
+            const response = await fetch('@Url.Content("~/api/districts")' + `?city=${city}`);
+            const data = await response.json();
+            data.forEach(districts => {
+                const opt = new Option(districts, districts);
+                console.log(opt);
+                selArea.options.add(opt);
+            })
+            loadRoad();
+        }
+
+//Road==================================================
+
+        async function loadRoad() {
+            let area = selArea.options[selArea.selectedIndex].value;
+            console.log(area);
+            const response = await fetch('@Url.Content("~/api/Road")' + `?districts=${area}`);
+            const data = await response.json();
+            data.forEach(road => {
+                const opt = new Option(road, road);
+                selRoad.options.add(opt);
+            })
+        
+        }
+
+        loadCity();
+
+
+
+
+//取selCity的值 ======================================
+        @*async function LoadMembers() {
+            const response = await fetch('@Url.Content("~/api/members")');
+            const datas = await response.json();
+            datas.forEach(member => {
+                console.log(member.name)
+            });
+        }
+        LoadMembers();*@
+
+        @*selCity.addEventListener("change", () => {
 
             const city = selCity.options[selCity.selecyindex].value;
 
-            xhr.addEventListener("load", () => {
-
-                const data = JSON.parse(xhr.responseText);
-
-                data.forEach((Area) => {
-                    const opt = new Option(SiteId, SiteId);
-                    selArea.options.add(opt);
-
-                    xhr.open("POST","@Url.Content("~/API/districts")")
-
-
-                })
-
-            })
-
     })
-
-
 
      const xhr =new XMLHttpRequest();
 //=========================================
@@ -68,10 +112,22 @@
     xhr.send();
 
         //========================================
-      
 
+                xhr.addEventListener("load", () => {
+
+                const data = JSON.parse(xhr.responseText);
+
+                data.forEach((Area) => {
+                    const opt = new Option(SiteId, SiteId);
+                    selArea.options.add(opt);
+
+                    xhr.open("POST","@Url.Content("~/API/districts")")
+
+
+
+            })*@
 
     </script>
 
 
-}*@
+}
