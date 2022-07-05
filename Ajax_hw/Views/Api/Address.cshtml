@@ -1,0 +1,77 @@
+﻿
+@*@{
+    ViewData["Title"] = "Address";
+}
+
+<h1>Address</h1>
+
+<select id="selCity">
+</select>
+<select id="selArea">
+</select>
+<select id="selRoad">
+</select>
+
+
+@section Scripts {
+
+    <script>
+
+
+
+        const selCity = document.querySelector("#selCity");
+        const selArea = document.querySelector("#selArea");
+        const selRoad = document.querySelector("#selRoad");
+
+        selCity.addEventListener("change", () => {
+
+            const city = selCity.options[selCity.selecyindex].value;
+
+            xhr.addEventListener("load", () => {
+
+                const data = JSON.parse(xhr.responseText);
+
+                data.forEach((Area) => {
+                    const opt = new Option(SiteId, SiteId);
+                    selArea.options.add(opt);
+
+                    xhr.open("POST","@Url.Content("~/API/districts")")
+
+
+                })
+
+            })
+
+    })
+
+
+
+     const xhr =new XMLHttpRequest();
+//=========================================
+        //city
+    xhr.addEventListener("load", () => {
+
+        const data = JSON.parse(xhr.responseText);
+
+        console.log(xhr.responseText);
+        console.log(JSON.parse(xhr.responseText));
+        data.forEach((city => {
+            const opt = new Option(city, city);
+            console.log(opt);
+            selCity.options.add(opt);
+
+        }))
+
+    })
+
+    xhr.open("POST", "@Url.Content("~/api/city")");
+    xhr.send();
+
+        //========================================
+      
+
+
+    </script>
+
+
+}*@

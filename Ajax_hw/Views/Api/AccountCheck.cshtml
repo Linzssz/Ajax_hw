@@ -1,0 +1,94 @@
+﻿
+@{
+    ViewData["Title"] = "AccountCheck";
+}
+
+<h1>AccountCheck</h1>
+<form method="post" name="userInfo">
+    <div class="form-group">
+        <label for="Inputname">name</label>
+        <input type="text" class="form-control" id="Inputname" name="name">
+        <small id="emailHelp" class="form-text text-muted"></small>
+    </div>
+    <div class="form-group">
+        <label for="InputEmail">Email</label>
+        <input type="email" class="form-control" id="Inputemail" name="email">
+    </div>
+    <div class="form-group">
+        <label for="Inputage">age</label>
+        <input type="text" class="form-control" id="Inputage" name="age">
+    </div>
+    <div class="custom-file  mt-3">
+        <input type="file" class="custom-file-input" id="customFile" name="file">
+        <label class="custom-file-label" for="customFile">選擇檔案</label>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+<div class="alert alert-info" id="div1"></div>
+
+@section Scripts
+{
+
+    <script>
+
+
+        const txtname = document.querySelector("#Inputname");
+        const info = document.querySelector("#emailHelp");
+        const btn = document.querySelector(".btn");
+        const divinfo = document.querySelector("#div1");
+//姓名驗證===============================================
+        txtname.addEventListener("blur", () => {
+           const xhr = new XMLHttpRequest();
+
+            xhr.addEventListener("load", () =>
+            {
+                const data = xhr.responseText;
+                info.innerHTML = `<h3>${data}</h3>`;
+
+            })
+
+            const formdata = new FormData(document.userInfo);
+            xhr.open("POST"," @Url.Content("~/api/Index")");
+            xhr.send(formdata);
+
+
+        })
+  //=====================================================
+        btn.addEventListener("click", (evt) => {
+
+            evt.preventDefault();
+            const xhr = new XMLHttpRequest();
+          
+
+            //透過 fetch() 上傳圖檔=====================================
+
+            @*fetch('@Url.Content("~/api/Register")', {
+                method: "Post",
+                body: formdata
+            }).then(response => response.Text())
+                .then(data => divinfo.innerHTML = data);*@
+
+
+
+            //透過 XMLHttpRequest 上傳圖檔===============================
+            xhr.addEventListener("load", () =>
+            {
+                const data = xhr.responseText;
+                divinfo.innerHTML = `<h3>${data}</h3>`;
+
+            })
+
+            const formdata = new FormData(document.userInfo);
+            xhr.open("POST"," @Url.Content("~/api/Register")");
+            xhr.send(formdata);
+
+
+        })
+
+
+    </script>
+
+
+
+}
+

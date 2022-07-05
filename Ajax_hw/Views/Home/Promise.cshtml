@@ -1,0 +1,46 @@
+﻿
+@{
+    ViewData["Title"] = "Promise";
+}
+
+<h1>Promise</h1>
+
+@section Scripts {
+    <script>
+        function printSomthing(data) {
+            const promise = new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    resolve(data);
+                }, 1000);
+            })
+            return promise;
+        }
+
+        printSomthing("A").then(data => {
+            console.log(data)
+            return printSomthing("B")
+        }).then(data => {
+            console.log(data)
+            return printSomthing("C")
+        }).then(data => {
+            console.log(data)
+        }).finally(() => {
+            console.log("END")
+        })
+
+
+
+
+
+            
+
+
+
+
+    </script>
+
+
+
+
+
+}

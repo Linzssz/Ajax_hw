@@ -56,7 +56,7 @@ namespace Ajax_hw
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=API}/{action=Address}/{id?}");
             });
         }
     }
